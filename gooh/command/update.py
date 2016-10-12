@@ -6,8 +6,6 @@ from os import makedirs
 from semantic_version import Version, Spec, validate
 
 
-#class Update(object):
-
 def update(args):
     dependency_file = args.dependency_file
     clone_path = args.clone_path
