@@ -1,7 +1,7 @@
 # Byte-compiled / optimized / DLL files
 .idea/
 roles/
-
+.DS_Store
 __pycache__/
 *.py[cod]
 *$py.class
