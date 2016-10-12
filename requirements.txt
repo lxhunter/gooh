@@ -1,3 +1,0 @@
-semantic_version
-sh
-pyyaml
