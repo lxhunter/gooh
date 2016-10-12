@@ -1,0 +1,3 @@
+---
+- src: https://github.com/lxhunter/versions.git
+  version: '~1.0.0'

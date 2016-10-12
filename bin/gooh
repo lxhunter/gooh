@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import argparse
+
+from gooh.command import update
+
+parser = argparse.ArgumentParser(description='Git Out Of Hell - Language agnostic semantic versioner using git tags')
+subparsers = parser.add_subparsers()
+
+parser_update = subparsers.add_parser(
+    'update',
+    help='clones or pulls repository, sets it to the proper version (if specified)'
+)
+parser_update.add_argument(
+    '--dependency_file',
+    default='gooh.yml',
+    help='Config yaml which holds all dependencies\n (default=gooh.yml)'
+)
+parser_update.add_argument(
+    '--clone_path',
+    default='roles',
+    help='Path where the dependencies should be cloned (default=roles)'
+)
+parser_update.set_defaults(func=update.update)
+
+args = parser.parse_args()
+args.func(args)
+
+exit(0)
