@@ -3,6 +3,7 @@
 import argparse
 import yaml
 import sh
+import os
 from urlparse import urlparse
 from os.path import splitext, basename, exists
 from os import makedirs
@@ -15,11 +16,15 @@ def update(args):
 
     requirements = []
 
-    with open(dependency_file, 'r') as stream:
-        try:
-            requirements = yaml.load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
+    try:
+        with open(dependency_file, 'r') as stream:
+            try:
+                requirements = yaml.load(stream)
+            except yaml.YAMLError as exc:
+                print(exc)
+    except IOError as e:
+        print(e)
+        exit(e.errno)
 
     git = sh.git.bake(_cwd=clone_path)
 
@@ -76,25 +81,19 @@ def update(args):
 
 
 parser = argparse.ArgumentParser(description='Git Out Of Hell - Language agnostic semantic versioner using git tags')
-subparsers = parser.add_subparsers()
 
-parser_update = subparsers.add_parser(
-    'update',
-    help='clones or pulls repository, sets it to the proper version (if specified)'
-)
-parser_update.add_argument(
+parser.add_argument(
     '--dependency_file',
     default='gooh.yml',
     help='Config yaml which holds all dependencies\n (default=gooh.yml)'
 )
-parser_update.add_argument(
+
+parser.add_argument(
     '--clone_path',
     default='roles',
     help='Path where the dependencies should be cloned (default=roles)'
 )
-parser_update.set_defaults(func=update)
 
-args = parser.parse_args()
-args.func(args)
+update(parser.parse_args())
 
 exit(0)
