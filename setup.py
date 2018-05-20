@@ -41,8 +41,8 @@ setup(
           'semantic_version',
           'sh',
           'PyYAML'
-          ]
-      )
+          ],
       cmdclass={
             'verify': VerifyVersionCommand,
       }
+)
