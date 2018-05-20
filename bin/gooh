@@ -9,6 +9,15 @@ from os.path import splitext, basename, exists
 from os import makedirs
 from semantic_version import Version, Spec, validate
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 def update(args):
     dependency_file = args.dependency_file
@@ -74,9 +83,12 @@ def update(args):
             spec = Spec(version)
             selected_version = spec.select(versions)
             if selected_version is None:
-                print 'No suitable version: ' + version + ' found for ' + name + ' in ' + str(versions)
+                print bcolors.FAIL + 'No suitable version: ' + version + ' found for ' + name + bcolors.ENDC
             else:
-                print 'Selecting version: ' + str(selected_version) + ' for ' + name + ' from ' + str(versions)
+                versionList = []
+                for version in versions:
+                    versionList.append(str(version))
+                print bcolors.OKGREEN + 'Selecting version: ' + str(selected_version) + ' for ' + name + bcolors.ENDC + ' from ' + ', '.join(versionList)
                 repo.checkout('tags/' + str(selected_version), _tty_out=False)
 
 
