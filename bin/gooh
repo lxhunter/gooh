@@ -75,9 +75,9 @@ def update(args):
             selected_version = spec.select(versions)
             if selected_version is None:
                 print 'No suitable version: ' + version + ' found for ' + name + ' in ' + str(versions)
-                exit(1)
-            print 'Selecting version: ' + str(selected_version) + ' for ' + name + ' from ' + str(versions)
-            repo.checkout('tags/' + str(selected_version), _tty_out=False)
+            else:
+                print 'Selecting version: ' + str(selected_version) + ' for ' + name + ' from ' + str(versions)
+                repo.checkout('tags/' + str(selected_version), _tty_out=False)
 
 
 parser = argparse.ArgumentParser(description='Git Out Of Hell - Language agnostic semantic versioner using git tags')
