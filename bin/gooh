@@ -26,7 +26,7 @@ def update(args):
         print(e)
         exit(e.errno)
 
-    git = sh.git.bake(_cwd=clone_path)
+    git = sh.git.bake(_cwd=clone_path, _tty_out=False)
 
     if not exists(clone_path):
         makedirs(clone_path)
@@ -53,7 +53,7 @@ def update(args):
         if 'branch' in requirement:
             branch = requirement['branch']
 
-        repo = sh.git.bake(_cwd=clone_path + '/' + name)
+        repo = sh.git.bake(_cwd=clone_path + '/' + name, _tty_out=False)
 
         if not exists(clone_path + '/' + name):
             print 'Cloning: ' + name + ' into ' + clone_path + '/' + name
@@ -66,7 +66,7 @@ def update(args):
 
         versions = []
 
-        for tag in repo.tag('-l').split('\n'):
+        for tag in repo.tag('-l',_tty_out=False).split('\n'):
             if tag and validate(tag):
                 versions.append(Version(tag))
 
@@ -77,7 +77,7 @@ def update(args):
                 print 'No suitable version: ' + version + ' found for ' + name + ' in ' + str(versions)
                 exit(1)
             print 'Selecting version: ' + str(selected_version) + ' for ' + name + ' from ' + str(versions)
-            repo.checkout('tags/' + str(selected_version))
+            repo.checkout('tags/' + str(selected_version), _tty_out=False)
 
 
 parser = argparse.ArgumentParser(description='Git Out Of Hell - Language agnostic semantic versioner using git tags')
