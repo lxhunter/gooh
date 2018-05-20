@@ -43,3 +43,6 @@ setup(
           'PyYAML'
           ]
       )
+      cmdclass={
+            'verify': VerifyVersionCommand,
+      }
